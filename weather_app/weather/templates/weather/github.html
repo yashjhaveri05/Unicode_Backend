@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>           
+    <title>Github</title>
+    <style>
+        #follow{
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+        #content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+          <a href="{% url 'weather:user_search' %}" class="brand-logo">Github</a>
+          <ul id="nav-mobile" class="right">
+            <li><a href="{% url 'weather:index' %}">Weather</a></li>
+          </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="form row">
+            <form class="col s12" method="GET" action="{% url 'weather:github' %}">
+                {% csrf_token %}
+                <div class="input-field">
+                    <input type="text" name="username" placeholder="Enter GitHub Username">
+                </div>
+            </form>
+        </div>
+        {% if user_info %}
+            <div class="row">
+                <div class="col s3"></div>
+                <div class="col s6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ user_info.image }}">
+                        </div>
+                            <div class="card-content" id="content">
+                                <h2>{{ user_info.name }}</h2>
+                                {% if user_info.location %}
+                                    <h5>Location: {{ user_info.location }}</h5>
+                                {% endif %}
+                                {% if user_info.bio %}
+                                    <h6>{{ user_info.bio }}</h6>
+                                {% endif %}
+                                <h5>Public Repositories : {{ user_info.public_repos }}</h5>
+                                <div class="follow" id="follow">
+                                    <h5>Followers : {{ user_info.followers }}</h5>
+                                    <h5 style="margin-left: 10px;">Following : {{ user_info.following }}</h5>
+                                </div>                         
+                                <h5>Created : {{ user_info.created }}</h5>
+                                <h5>Updated : {{ user_info.update }}</h5>
+                            </div>
+                            <div class="card-action"  id="content">
+                                <a href="{{ user_info.link }}">Github Link</a>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col s3"></div>
+        </div>
+        {% endif %}
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+</body>
+</html>
