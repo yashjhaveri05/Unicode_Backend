@@ -5,12 +5,13 @@ from .models import City
 from .forms import CityForm
 from .task1 import Task1
 
-# Searching and Adding Weather according to City To Database using POST request
+#Task 1,2 using dynamic url
 def task(request, x, y):
     data = Task1(x,y)
     print(data)
-    return JsonResponse(data, safe=False)
+    return JsonResponse(Task1(x,y), safe=False)
 
+# Searching and Adding Weather according to City To Database using POST request
 def index(request):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=d9f018ab094f5f7a34df0ec41f79c368'
 
@@ -32,6 +33,11 @@ def index(request):
                 else:
                     err_msg = 'No Such City Found!'
             else:
+                city_names = City.objects.filter(name=new_city)
+                if city_names.exists():
+                    for city_name in city_names:
+                        total = int(city_name.count) + 1
+                    city_names.update(count=total)
                 err_msg = 'City Already Exists!!'
         if err_msg:
             message = err_msg
