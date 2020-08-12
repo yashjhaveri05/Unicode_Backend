@@ -69,7 +69,7 @@ values and display them using Django templates.
 
 > Clone the repository.<br>
 > Install django and other required dependencies.Also make sure to have installed Python and Pip.<br>
-> Run npm start in the command line to run the website on local host.
+> Run 'python manage.py runserver' in the command line to run the website on local host.
 
 ## App Info
 
